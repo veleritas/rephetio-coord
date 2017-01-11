@@ -30,5 +30,6 @@ for ((i=0; i<K; i++)); do
     jupyter nbconvert --execute 3-matrixfy.ipynb --inplace --ExecutePreprocessor.timeout=-1 &
     cd ~
 done
+wait
 
 echo "Finished preparation for prediction calculation"
