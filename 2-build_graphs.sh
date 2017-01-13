@@ -76,6 +76,6 @@ wait
 
 
 echo "Running neo4j imports"
-for ((i=0; i<K; i++)); do echo $i; done | parallel -j$MAX_FOLD --no-notice bash 2.1-neo4j_import.sh
+for ((i=0; i<K; i++)); do echo $i; done | parallel --ungroup -j$MAX_FOLD --no-notice bash 2.1-neo4j_import.sh
 
 echo "Done data integration for $K fold cross validation"
