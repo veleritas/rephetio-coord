@@ -23,37 +23,22 @@ echo "Finished cloning learn repository"
 
 source activate integrate
 
+
+
 cd ~
-echo "Start neo4j servers"
-# uses 15 GB RAM for 5fold, smallest network
-# may need to do everything in limits of MAX_FOLD
+echo "Saving Neo4j server information"
 for ((i=0; i<K; i++)); do
-    cd "fold$i/learn/all-features"
-    bash pipeline.sh
-    cd ~
+    serv_loc="$PWD/fold$i/integrate/neo4j/servers.py"
+    json_loc="$PWD/fold$i/learn/all-features/servers.json"
+
+    python $serv_loc --write $json_loc
 done
 
 
 cd ~
-echo "Running summary notebooks"
-for ((i=0; i<K; i++)); do
-    cd "fold$i/learn/summary"
-    echo "Starting summary notebook for fold $i"
-    jupyter nbconvert --execute 1-summary.ipynb --inplace --ExecutePreprocessor.timeout=-1 &
-    cd ~
-done
-wait
+echo "Running precalculation notebooks"
+for ((i=0; i<K; i++)); do echo $i; done | parallel --ungroup -j$MAX_FOLD --no-notice bash 3.1-pre_calc.sh
 
-
-cd ~
-echo "Running partition notebook"
-for ((i=0; i<K; i++)); do
-    cd "fold$i/learn/all-features"
-    echo "Starting partition notebook for fold $i"
-    jupyter nbconvert --execute 1-partition.ipynb --inplace --ExecutePreprocessor.timeout=-1 &
-    cd ~
-done
-wait
 
 
 cd ~
