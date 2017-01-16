@@ -2,7 +2,7 @@
 
 K=5
 
-MAX_FOLD=3
+MAX_FOLD=2
 
 # assumes that build_graphs.sh has successfully finished running
 
