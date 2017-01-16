@@ -19,7 +19,7 @@ wait
 
 
 echo "Starting prediction feature extraction"
-for ((i=0; i<K; i++)); do echo $i; done | parallel -j$MAX_FOLD --no-notice bash 6.1-predict_extract.sh
+for ((i=0; i<K; i++)); do echo $i; done | parallel --ungroup -j$MAX_FOLD --no-notice bash 6.1-predict_extract.sh
 echo "Finished prediction extraction"
 
 

@@ -1,26 +1,22 @@
 fold=$1
 
-# start neo4j servers
-cd ~
-cd "fold$fold/learn/all-features"
 echo "Starting neo4j servers for fold $fold"
-SERVERS=../../integrate/neo4j/servers.py
-python $SERVERS --start-all
+serv_loc="$PWD/fold$fold/integrate/neo4j/servers.py"
+python $serv_loc --start-all
 
+
+source activate integrate
 
 # run the extract notebooks
-cd ~
-cd "fold$fold/learn/prediction"
-
 echo "Starting extraction for fold $fold"
+
+cd "fold$fold/learn/prediction"
 jupyter nbconvert --execute 2-extract.ipynb --inplace --ExecutePreprocessor.timeout=-1
 echo "Finished extraction step for fold $fold"
 
 
 # stop neo4j servers
-cd ~
 echo "Stopping neo4j servers for fold $fold"
-SERVERS="fold$fold/integrate/neo4j/servers.py"
-python $SERVERS --stop-all
+python $serv_loc --stop-all
 
 echo "Finished extraction for fold $fold"

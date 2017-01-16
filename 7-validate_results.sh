@@ -3,7 +3,6 @@
 K=5
 
 
-
 echo "Activating python environment"
 source activate integrate
 
