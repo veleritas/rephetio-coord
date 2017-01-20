@@ -36,15 +36,17 @@ done
 echo "Activating runtime environment"
 source activate integrate
 
-echo "Preparing resources"
-for ((i=0; i<K; i++)); do
-    cd "fold$i/integrate"
-    bash precompile.sh &
-    cd ~
-done
-wait
+# notebooks do not affect output files
 
-echo "Finished precompiling resources"
+#echo "Preparing resources"
+#for ((i=0; i<K; i++)); do
+#    cd "fold$i/integrate"
+#    bash precompile.sh &
+#    cd ~
+#done
+#wait
+#
+#echo "Finished precompiling resources"
 
 
 echo "Running integration scripts"
