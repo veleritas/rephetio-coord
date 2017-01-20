@@ -51,33 +51,12 @@ source activate integrate
 
 echo "Running integration scripts"
 
-cd ~
-echo "Running integrate notebooks"
-for ((i=0; i<K; i++)); do
-    cd "fold$i/integrate"
+for ((i=0; i<K; i++)); do echo $i; done | parallel --ungroup -j3 --no-notice bash 2.1-integrate.sh
 
-    echo "Running integrate.ipynb for fold $i"
-    jupyter nbconvert --execute integrate.ipynb --inplace --ExecutePreprocessor.timeout=-1 &
-
-    cd ~
-done
-wait
-
-
-cd ~
-echo "Running permute notebooks"
-for ((i=0; i<K; i++)); do
-    cd "fold$i/integrate"
-
-    echo "Running permute.ipynb for fold $i"
-    jupyter nbconvert --execute permute.ipynb --inplace --ExecutePreprocessor.timeout=-1 &
-
-    cd ~
-done
-wait
+for ((i=0; i<K; i++)); do echo $i; done | parallel --ungroup -j3 --no-notice bash 2.2-permute.sh
 
 
 echo "Running neo4j imports"
-for ((i=0; i<K; i++)); do echo $i; done | parallel --ungroup -j$MAX_FOLD --no-notice bash 2.1-neo4j_import.sh
+for ((i=0; i<K; i++)); do echo $i; done | parallel --ungroup -j$MAX_FOLD --no-notice bash 2.3-neo4j_import.sh
 
 echo "Done data integration for $K fold cross validation"
