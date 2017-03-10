@@ -1,6 +1,9 @@
 # Script for preparing the cross validation directory
 # Installs into the home directory, designed for AWS
 
+echo "Create anaconda environment"
+conda env create -f environment.yml
+
 echo "Preparing the cross validation data repository"
 
 cd ~
@@ -10,11 +13,6 @@ if [ -d "crossval" ]; then
 else
     echo "Cloning crossval directory"
     git clone https://github.com/veleritas/crossval.git
-
-    cd crossval
-
-    echo "Creating anaconda environment"
-    conda env create -f environment.yml
 fi
 
 cd ~
