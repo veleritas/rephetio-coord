@@ -11,7 +11,7 @@ echo "Starting feature extraction for fold $fold"
 cd "fold$fold/learn/all-features"
 source activate integrate
 
-jupyter nbconvert --execute 3-extract.ipynb --inplace --ExecutePreprocessor.timeout=-1
+python 3-extract.py
 
 echo "Finished feature extraction for fold $fold"
 

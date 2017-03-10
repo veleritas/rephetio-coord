@@ -2,7 +2,7 @@
 
 K=5
 
-MAX_FOLD=2
+MAX_FOLD=1
 
 # assumes all prior steps have completed successfully
 
@@ -16,7 +16,7 @@ echo "Finished parallel extract"
 
 
 echo "Starting parallel prior calculations for $K folds ($MAX_FOLD concurrently)"
-for ((i=0; i<K; i++)); do echo $i; done | parallel --ungroup --no-notice bash 4.2-calc_priors.sh
+for ((i=0; i<K; i++)); do echo $i; done | parallel --ungroup -j5 --no-notice bash 4.2-calc_priors.sh
 echo "Finished calculating priors"
 
 echo "Finished"
