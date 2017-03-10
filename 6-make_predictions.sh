@@ -1,6 +1,6 @@
 K=5
 
-MAX_FOLD=3
+MAX_FOLD=1
 
 echo "Activating python environment"
 source activate integrate
