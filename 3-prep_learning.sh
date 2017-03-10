@@ -2,7 +2,7 @@
 
 K=5
 
-MAX_FOLD=2
+MAX_FOLD=1
 
 # assumes that build_graphs.sh has successfully finished running
 
@@ -14,7 +14,7 @@ for ((i=0; i<K; i++)); do
         echo "Downloading learn into fold $i"
 
         cd "fold$i"
-        git clone https://github.com/veleritas/learn.git
+        git clone https://github.com/veleritas/learn.git -b neo3test
         cd ..
     fi
 done
