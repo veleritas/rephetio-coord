@@ -2,10 +2,13 @@
 # Prepares K versions
 
 # number of cross validations
-K=5
+K=1
 
 # max number of fold validations to do concurrently
 MAX_FOLD=2
+
+TOP=$(dirname "$PWD")
+cd $TOP
 
 
 echo "Preparing folder structure for $K fold cross validation"
@@ -25,11 +28,12 @@ for ((i=0; i<K; i++)); do
 
     if [ ! -d "integrate" ]; then
         echo "Cloning integrate repository for fold $i"
-        git clone https://github.com/veleritas/integrate.git -b neo3test
+        git clone https://github.com/veleritas/integrate.git -b refactor
     fi
 
     cd ..
 done
+
 
 #-------------------------------------------------------------------------------
 
@@ -38,22 +42,24 @@ source activate integrate
 
 # notebooks do not affect output files
 
-#echo "Preparing resources"
-#for ((i=0; i<K; i++)); do
-#    cd "fold$i/integrate"
-#    bash precompile.sh &
-#    cd ~
-#done
-#wait
-#
-#echo "Finished precompiling resources"
+echo "Preparing resources"
+for ((i=0; i<K; i++)); do
+    cd "fold$i/integrate"
+    bash precompile.sh &
+    cd $TOP
+done
+wait
+
+echo "Finished precompiling resources"
 
 
 echo "Running integration scripts"
 
 for ((i=0; i<K; i++)); do echo $i; done | parallel --ungroup -j5 --no-notice bash 2.1-integrate.sh
 
+
 for ((i=0; i<K; i++)); do echo $i; done | parallel --ungroup -j5 --no-notice bash 2.2-permute.sh
+
 
 
 echo "Running neo4j imports"
@@ -62,7 +68,7 @@ for ((i=0; i<K; i++)); do echo $i; done | parallel --ungroup -j5 --no-notice bas
 
 # run the neo4j csv importer
 for ((i=0; i<K; i++)); do
-    cd ~
+    cd $TOP
     echo "Running Neo4j CSV importer for fold $i"
     cd "fold$i/integrate"
     bash neo4j-import.sh
