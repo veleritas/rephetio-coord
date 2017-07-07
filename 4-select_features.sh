@@ -1,6 +1,6 @@
 # select the metapath features which will be used for learning
 
-K=5
+K=1
 
 MAX_FOLD=1
 
