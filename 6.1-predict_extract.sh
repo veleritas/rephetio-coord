@@ -1,7 +1,9 @@
 fold=$1
 
+TOP=$(dirname "$PWD")
+
 echo "Starting neo4j servers for fold $fold"
-serv_loc="$PWD/fold$fold/integrate/neo4j/servers.py"
+serv_loc="$TOP/fold$fold/integrate/neo4j/servers.py"
 python $serv_loc --start-all
 
 
@@ -10,11 +12,10 @@ source activate integrate
 # run the extract notebooks
 echo "Starting extraction for fold $fold"
 
-cd "fold$fold/learn/prediction"
+cd "$TOP/fold$fold/learn/prediction"
 
 python 2-extract.py
 
-#jupyter nbconvert --execute 2-extract.ipynb --inplace --ExecutePreprocessor.timeout=-1
 echo "Finished extraction step for fold $fold"
 
 
