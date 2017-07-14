@@ -1,6 +1,6 @@
 # make the final predictions and validate the results
 
-K=1
+K=5
 
 TOP=$(dirname "$PWD")
 
@@ -37,5 +37,7 @@ for ((i=0; i<K; i++)); do
     jupyter nbconvert --execute eval_curves.ipynb --inplace --ExecutePreprocessor.timeout=-1 &
 done
 wait
+
+source deactivate
 
 echo "Finished entire pipeline"

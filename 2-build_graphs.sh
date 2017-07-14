@@ -2,7 +2,7 @@
 # Prepares K versions
 
 # number of cross validations
-K=1
+K=5
 
 # max number of fold validations to do concurrently
 MAX_FOLD=2
@@ -73,5 +73,7 @@ for ((i=0; i<K; i++)); do
     cd "fold$i/integrate"
     bash neo4j-import.sh
 done
+
+source deactivate
 
 echo "Done data integration for $K fold cross validation"

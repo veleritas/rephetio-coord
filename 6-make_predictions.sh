@@ -1,4 +1,4 @@
-K=1
+K=5
 
 MAX_FOLD=1
 
@@ -20,18 +20,28 @@ done
 wait
 
 
-echo "Starting prediction feature extraction"
-for ((i=0; i<K; i++)); do echo $i; done | parallel --ungroup -j$MAX_FOLD --no-notice bash 6.1-predict_extract.sh
-echo "Finished prediction extraction"
+#echo "Starting prediction feature extraction"
+#for ((i=0; i<K; i++)); do echo $i; done | parallel --ungroup -j$MAX_FOLD --no-notice bash 6.1-predict_extract.sh
+#echo "Finished prediction extraction"
 
 
-cd $TOP
+#cd $TOP
+#for ((i=0; i<K; i++)); do
+#    echo "Running matrixfy for fold $i"
+#    cd "fold$i/learn/prediction"
+#    jupyter nbconvert --execute 3-matrixfy.ipynb --inplace --ExecutePreprocessor.timeout=-1 &
+#    cd $TOP
+#done
+#wait
+
+
 for ((i=0; i<K; i++)); do
-    echo "Running matrixfy for fold $i"
-    cd "fold$i/learn/prediction"
-    jupyter nbconvert --execute 3-matrixfy.ipynb --inplace --ExecutePreprocessor.timeout=-1 &
-    cd $TOP
+    echo "Starting new extract and matrixify for fold$i"
+
+    cd "$TOP/fold$i/learn/prediction"
+    jupyter nbconvert --execute new_predict_extract.ipynb --inplace --ExecutePreprocessor.timeout=-1
 done
-wait
+
+source deactivate
 
 echo "Finished preparation for prediction calculation"

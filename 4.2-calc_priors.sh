@@ -9,4 +9,6 @@ echo "Starting prior calculations for fold $fold"
 source activate integrate
 python 1-prior.py
 
+source deactivate
+
 echo "Finished prior calculations for fold $fold"

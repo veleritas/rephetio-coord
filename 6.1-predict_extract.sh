@@ -23,4 +23,6 @@ echo "Finished extraction step for fold $fold"
 echo "Stopping neo4j servers for fold $fold"
 python $serv_loc --stop-all
 
+source deactivate
+
 echo "Finished extraction for fold $fold"

@@ -18,3 +18,5 @@ python 3-extract.py
 echo "Finished feature extraction for fold $fold"
 
 python $serv_loc --stop-all
+
+source deactivate

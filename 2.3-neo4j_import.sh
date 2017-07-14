@@ -12,4 +12,6 @@ jupyter nbconvert --execute prepare_neo4j_import_csvs.ipynb --inplace --ExecuteP
 
 jupyter nbconvert --execute prep_import.ipynb --inplace --ExecutePreprocessor.timeout=-1
 
+source deactivate
+
 echo "Finished fold $fold hetnet construction"

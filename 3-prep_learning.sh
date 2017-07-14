@@ -1,6 +1,6 @@
 # Prepare graphs for learning
 
-K=1
+K=5
 
 MAX_FOLD=1
 
@@ -56,3 +56,4 @@ done
 wait
 
 echo "Finished preparing for learning"
+source deactivate

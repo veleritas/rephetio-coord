@@ -1,6 +1,6 @@
 # Continue the learning paradigm
 
-K=1
+K=5
 
 # assumes all prior steps have completed successfully
 
@@ -12,13 +12,13 @@ source activate integrate
 
 cd $TOP
 
-echo "Creating feature matrix"
-for ((i=0; i<K; i++)); do
-    cd "fold$i/learn/all-features"
-    jupyter nbconvert --execute 4-matrixfy.ipynb --inplace --ExecutePreprocessor.timeout=-1 &
-    cd $TOP
-done
-wait
+#echo "Creating feature matrix"
+#for ((i=0; i<K; i++)); do
+#    cd "fold$i/learn/all-features"
+#    jupyter nbconvert --execute 4-matrixfy.ipynb --inplace --ExecutePreprocessor.timeout=-1 &
+#    cd $TOP
+#done
+#wait
 
 
 cd $TOP
@@ -39,5 +39,7 @@ for ((i=0; i<K; i++)); do
     cd $TOP
 done
 wait
+
+source deactivate
 
 echo "Finished"
