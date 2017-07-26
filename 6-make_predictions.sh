@@ -19,22 +19,6 @@ for ((i=0; i<K; i++)); do
 done
 wait
 
-
-#echo "Starting prediction feature extraction"
-#for ((i=0; i<K; i++)); do echo $i; done | parallel --ungroup -j$MAX_FOLD --no-notice bash 6.1-predict_extract.sh
-#echo "Finished prediction extraction"
-
-
-#cd $TOP
-#for ((i=0; i<K; i++)); do
-#    echo "Running matrixfy for fold $i"
-#    cd "fold$i/learn/prediction"
-#    jupyter nbconvert --execute 3-matrixfy.ipynb --inplace --ExecutePreprocessor.timeout=-1 &
-#    cd $TOP
-#done
-#wait
-
-
 for ((i=0; i<K; i++)); do
     echo "Starting new extract and matrixify for fold$i"
 

@@ -11,13 +11,6 @@ TOP=$(dirname "$PWD")
 echo "Activating learning environment"
 source activate integrate
 
-
-#echo "Starting parallel extract for $K folds ($MAX_FOLD concurrently)"
-#for ((i=0; i<K; i++)); do echo $i; done | parallel --ungroup -j$MAX_FOLD --no-notice bash 4.1-extract.sh
-#echo "Finished parallel extract"
-
-
-
 echo "Starting parallel prior calculations for $K folds ($MAX_FOLD concurrently)"
 for ((i=0; i<K; i++)); do echo $i; done | parallel --ungroup -j5 --no-notice bash 4.2-calc_priors.sh
 echo "Finished calculating priors"
@@ -27,8 +20,8 @@ echo "Finished calculating priors"
 echo "Running new combined all-features extract and matrixify for fold $i"
 for ((i=0; i<K; i++)); do
     cd "$TOP/fold$i/learn/all-features"
-    jupyter nbconvert --execute new_extract_matrixify.ipynb --inplace --ExecutePreprocessor.timeout=-1
 
+    python new_extract_matrixify.py
 done
 
 source deactivate
