@@ -4,6 +4,14 @@ fold=$1
 
 echo "Beginning fold $fold hetnet construction"
 
+source activate integrate
+
 cd "fold$fold/integrate"
-jupyter nbconvert --execute neo4j-import.ipynb --inplace --ExecutePreprocessor.timeout=-1
+
+jupyter nbconvert --execute prepare_neo4j_import_csvs.ipynb --inplace --ExecutePreprocessor.timeout=-1
+
+jupyter nbconvert --execute prep_import.ipynb --inplace --ExecutePreprocessor.timeout=-1
+
+source deactivate
+
 echo "Finished fold $fold hetnet construction"

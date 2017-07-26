@@ -19,3 +19,5 @@ jupyter nbconvert --execute 1-partition.ipynb --inplace --ExecutePreprocessor.ti
 
 echo "Stopping neo4j servers for $fold"
 python $serv_loc --stop-all
+
+source deactivate
