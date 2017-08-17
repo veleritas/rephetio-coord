@@ -1,6 +1,17 @@
 # Script for preparing the cross validation directory
 # Installs into the directory above the current directory
 
+# check that user decided which dataset to use
+if [ $# -eq 0 ]; then
+    echo "Please enter the gold standard name: 'gold' or 'rare'"
+    exit 1
+fi
+
+dataset=$1
+
+echo "Starting gold standard splitting with '$dataset' dataset..."
+
+
 # directory above current
 TOP=$(dirname "$PWD")
 
@@ -10,7 +21,6 @@ conda env create -f environment.yml
 echo "Preparing the cross validation data repository"
 
 cd $TOP
-
 if [ -d "crossval" ]; then
     echo "Skipping crossval directory cloning"
 else
@@ -24,16 +34,10 @@ echo "Starting up environment"
 source activate integrate
 
 echo "Running data preparation notebook"
-jupyter nbconvert --execute crossval/split_gold_standard.ipynb --inplace --FilesWriter.build_directory=crossval --executePreprocessor.timeout=-1
+jupyter nbconvert --execute "crossval/split_${dataset}_standard.ipynb" --inplace --FilesWriter.build_directory=crossval --executePreprocessor.timeout=-1
 
 echo "Finished running gold standard splitting notebook"
 
-cd crossval
-
-git status
-
-echo "Git status should be clean"
-
-cd $TOP
+source deactivate
 
 echo "Finished crossval preprocessing"
